@@ -4,6 +4,34 @@
  
 @layer base {
   :root {
+    /* === LIGHT MODE - ENHANCED === */
+    --background: 210 40% 98%; /* Soft light gray */
+    --foreground: 222 47% 4%;  /* Deep gray for better readabiliy */
+
+    --primary: 263 70% 45%; /* Slightly softer purple */
+    --primary-foreground: 220 15% 20%; /* Darker text for better contrast */
+
+    --secondary: 222 47% 92%; /* Light pastel gray */
+    --secondary-foreground: 222 47% 4%;
+
+    --muted: 223 47% 90%;
+    --muted-foreground: 215 15% 30%;
+
+    --accent: 216 34% 85%;
+    --accent-foreground: 222 47% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 4%;
+
+    --border: 220 13% 70%;
+    --input: 220 13% 85%;
+    --ring: 263 70% 50%;
+
+    --radius: 0.5rem;
+  }
+
+  /* === DARK MODE (NO CHANGES) === */
+  .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
 
@@ -25,10 +53,9 @@
     --border: 216 34% 17%;
     --input: 216 34% 17%;
     --ring: 263 70% 50%;
-
-    --radius: 0.5rem;
   }
 }
+
 
 @layer base {
   * {
@@ -47,4 +74,22 @@
   box-shadow: 0 0 10px theme('colors.primary.DEFAULT'),
               0 0 20px theme('colors.primary.DEFAULT'),
               0 0 30px theme('colors.primary.DEFAULT');
+}
+/* Light Theme */
+:root {
+  --background: #ffffff;
+  --text: #000000;
+}
+
+/* Dark Theme */
+.dark {
+  --background: #080210;
+  --text: #ffffff;
+}
+
+/* Apply Theme to Body */
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s ease-in-out;
 }

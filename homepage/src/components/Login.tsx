@@ -38,7 +38,7 @@ const Login = () => {
             <Brain className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-            AI Curriculum Mapper
+            Welcome To Code X
           </h1>
           <p className="text-muted-foreground mt-2 text-center">
             {isLogin

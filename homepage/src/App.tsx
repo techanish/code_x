@@ -1,13 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, BookOpen, BarChart3, MessageSquare, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import DashboardMetrics from './components/DashboardMetrics';
 import SkillsAnalysis from './components/SkillsAnalysis';
 import AIChat from './components/AIChat';
 import Login from './components/Login';
+import Settings from './components/Settings'; // ✅ Import Settings Component
 import { useAuth } from './context/AuthContext';
-
+import Courses from './components/Courses';
 function App() {
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
   const [activeView, setActiveView] = React.useState('dashboard');
@@ -26,12 +27,15 @@ function App() {
           <div className="glass rounded-xl p-8">
             <h2 className="text-2xl font-bold mb-6">Course Management</h2>
             <p className="text-muted-foreground">Your courses will appear here.</p>
+            <Courses />
           </div>
         );
       case 'analytics':
         return <DashboardMetrics />;
       case 'chat':
         return <AIChat />;
+      case 'settings':
+        return <Settings />; // ✅ Render Settings when selected
       default:
         return (
           <>

@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { auth, signUp, logIn, logOut } from '../firebase';
+import { User as FirebaseUser, onAuthStateChanged } from 'firebase/auth';
 
 interface User {
-  email: string;
+  email: string | null;
 }
 
 interface AuthContextType {
@@ -18,56 +20,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check for existing session
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-      setIsAuthenticated(true);
-    }
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
+      if (firebaseUser) {
+        setUser({ email: firebaseUser.email });
+        setIsAuthenticated(true);
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Simple validation
-    if (password.length < 6) {
-      throw new Error('Invalid credentials');
-    }
-
-    const user = { email };
-    setUser(user);
-    setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify(user));
-  };
-
-  const signup = async (email: string, password: string) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Simple validation
-    if (password.length < 6) {
-      throw new Error('Password must be at least 6 characters');
-    }
-
-    const user = { email };
-    setUser(user);
-    setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify(user));
-  };
-
-  const logout = async () => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
-  };
-
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login: logIn, signup: signUp, logout: logOut }}>
       {children}
     </AuthContext.Provider>
   );

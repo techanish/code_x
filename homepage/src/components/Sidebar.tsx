@@ -20,12 +20,13 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, activeView, setActiveView }) => {
   const { logout } = useAuth();
-  
+
   const menuItems = [
     { icon: Brain, label: 'AI Analysis', view: 'ai-analysis' },
     { icon: BookOpen, label: 'Courses', view: 'courses' },
     { icon: BarChart3, label: 'Analytics', view: 'analytics' },
     { icon: MessageSquare, label: 'Chat', view: 'chat' },
+    { icon: Settings, label: 'Settings', view: 'settings' }, // ✅ Ensure Settings view works
   ];
 
   const handleLogout = async () => {
@@ -51,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, activeView, setAct
               animate={{ opacity: 1 }}
               className="text-xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent"
             >
-              CurriMap
+              CODE X
             </motion.span>
           )}
           <button
@@ -59,9 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, activeView, setAct
             className="p-2 rounded-lg hover:bg-accent/50 transition-colors"
           >
             <ChevronLeft
-              className={`w-5 h-5 transition-transform ${
-                !isOpen ? 'rotate-180' : ''
-              }`}
+              className={`w-5 h-5 transition-transform ${!isOpen ? 'rotate-180' : ''}`}
             />
           </button>
         </div>
@@ -71,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, activeView, setAct
           {menuItems.map((item) => (
             <button
               key={item.label}
-              onClick={() => setActiveView(item.view)}
+              onClick={() => setActiveView(item.view)} // ✅ Ensure it updates activeView correctly
               className={`w-full flex items-center gap-4 p-3 rounded-lg hover:bg-accent/50 transition-colors group ${
                 activeView === item.view ? 'bg-accent/50' : ''
               }`}
@@ -94,18 +93,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, activeView, setAct
 
         {/* Bottom Actions */}
         <div className="space-y-2">
-          <button className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-accent/50 transition-colors group">
-            <Settings className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            {isOpen && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm font-medium"
-              >
-                Settings
-              </motion.span>
-            )}
-          </button>
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-accent/50 transition-colors group"
